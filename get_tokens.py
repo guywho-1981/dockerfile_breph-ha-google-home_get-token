@@ -4,10 +4,30 @@
 
 from gpsoauth import perform_master_login, perform_oauth
 from uuid import getnode as getmac
+import os
+import sys
 
-# Creds to use when logging in
-USERNAME = input("what is your google mail address? (include @gmail.com): ")
-PASSWORD = input("what is the password? (either use regular password or app password): ")
+# Trying to get the credentials
+try:
+    USERNAME = os.getenv("USERNAME")
+    PASSWORD = os.getenv("PASSWORD")
+
+    # Falls nicht, Eingabe abfragen
+    if not USERNAME:
+        while not USERNAME:
+            USERNAME = input("What is your google mail address? ").strip()
+            if not USERNAME:
+                print("The email address must be provided!\n")
+
+    if not PASSWORD:
+        while not PASSWORD:
+            PASSWORD = input("What is the password or app password? ").strip()
+            if not PASSWORD:
+                print("The password must be provided!\n")
+except EOFError:
+    print('Please run the container in interactive mode or use the environment \
+          variables "USERNAME" and "PASSWORD"')
+    sys.exit(2)
 
 # Optional Overrides (Set to None to ignore)
 device_id = None
@@ -16,7 +36,6 @@ access_token = None
 
 # Flags
 DEBUG = False
-
 
 def get_master_token(username, password, android_id):
     res = perform_master_login(username, password, android_id)
