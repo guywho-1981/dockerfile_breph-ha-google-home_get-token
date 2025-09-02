@@ -9,8 +9,8 @@ import sys
 
 # Trying to get the credentials
 try:
-    USERNAME = os.getenv(jfregia09@gmail.com)
-    PASSWORD = os.getenv(9126Cf07??)
+    USERNAME = os.getenv('USERNAME')
+    PASSWORD = os.getenv('PASSWORD')
 
     # Falls nicht, Eingabe abfragen
     if not USERNAME:
